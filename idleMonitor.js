@@ -83,13 +83,13 @@ function injectToast(tabId, tabTitle, category) {
         
         .toast {
             width: 320px;
-            background: oklch(98% 0.01 250);
-            border: 1px solid oklch(90% 0 0);
+            background: oklch(20% 0.02 250); /* --bg-card */
+            border: 1px solid oklch(35% 0.02 250); /* --border */
             border-radius: 12px;
             padding: 16px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
             font-family: 'Geist', sans-serif;
-            color: oklch(25% 0.02 250);
+            color: oklch(98% 0.01 250); /* --text-primary */
             display: flex;
             flex-direction: column;
             gap: 12px;
@@ -112,8 +112,8 @@ function injectToast(tabId, tabTitle, category) {
         }
 
         .badge {
-            background: oklch(92% 0.05 250);
-            color: oklch(45% 0.15 250);
+            background: oklch(15% 0.02 250); /* --bg */
+            color: oklch(75% 0.15 250); /* --primary-light */
             padding: 2px 8px;
             border-radius: 4px;
             font-size: 12px;
@@ -123,7 +123,7 @@ function injectToast(tabId, tabTitle, category) {
 
         .countdown {
             font-family: 'Departure Mono', monospace;
-            color: oklch(60% 0.15 25);
+            color: oklch(75% 0.15 70); /* Variable warning color if needed, or keep red-ish */
             font-weight: bold;
         }
 
@@ -139,7 +139,7 @@ function injectToast(tabId, tabTitle, category) {
         .desc {
             margin: 0;
             font-size: 13px;
-            color: oklch(40% 0 0);
+            color: oklch(75% 0.02 250); /* --text-secondary */
         }
 
         .actions {
@@ -151,8 +151,9 @@ function injectToast(tabId, tabTitle, category) {
         button {
             flex: 1;
             padding: 8px;
-            border: 1px solid oklch(85% 0 0);
-            background: white;
+            border: 1px solid oklch(35% 0.02 250); /* --border */
+            background: oklch(20% 0.02 250); /* --bg-card */
+            color: oklch(98% 0.01 250); /* --text-primary */
             border-radius: 6px;
             font-family: inherit;
             font-size: 13px;
@@ -161,18 +162,18 @@ function injectToast(tabId, tabTitle, category) {
         }
 
         button:hover {
-            background: oklch(95% 0 0);
+            background: oklch(25% 0.02 250); /* --bg-hover */
         }
 
         button.primary {
-            background: oklch(65% 0.15 250);
+            background: oklch(65% 0.15 250); /* --primary */
             color: white;
             border: none;
             font-weight: 600;
         }
 
         button.primary:hover {
-            background: oklch(45% 0.15 250);
+            background: oklch(45% 0.15 250); /* --primary-dark */
         }
     `;
 
