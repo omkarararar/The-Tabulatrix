@@ -3,47 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Tabulatrix</title>
-    <link rel="stylesheet" href="../assets/lib/oat.min.css">
+    <title>Tabulatrix Setup</title>
     <link rel="stylesheet" href="../globals.css">
     <link rel="stylesheet" href="onboarding.css">
 </head>
 <body>
-    <main class="wizard-container">
+    <div class="wizard-container">
+        <!-- Step Indicators -->
+        <div class="progress-bar">
+            <div class="dot active" id="dot1"></div>
+            <div class="dot" id="dot2"></div>
+            <div class="dot" id="dot3"></div>
+        </div>
+
+        <!-- Step 1: Welcome -->
         <div id="step1" class="step active">
-            <h1>Welcome to Tabulatrix</h1>
-            <p>Your intelligent browser manager. Let's get set up in under 2 minutes.</p>
-            <button class="primary action-btn" id="btnNext1">Get Started</button>
+            <h1 class="brand">tabulatrix</h1>
+            <p class="subtitle">Your browser, quietly managed.</p>
+            <p class="desc">
+                We'll monitor your tabs and automatically prompt you to close old, unused ones so you never waste memory again. Let's get things set up.
+            </p>
+            <button class="primary action-btn" id="btnNext1">Get Started &rarr;</button>
         </div>
-        
-        <div id="step2" class="step hidden">
-            <h2>Step 1: AI Brains (Optional)</h2>
-            <p>Tabulatrix can use Google Gemini to perfectly categorize every tab and summarize content before it closes.</p>
-            <div class="field">
-                <input type="password" id="wizardGeminiKey" placeholder="Enter Gemini API Key (Optional)">
+
+        <!-- Step 2: Idle Threshold -->
+        <div id="step2" class="step">
+            <h2>When should idle tabs be flagged?</h2>
+            <div class="pill-group" id="thresholdPills">
+                <button class="pill" data-val="30">30 minutes</button>
+                <button class="pill active" data-val="60">1 hour</button>
+                <button class="pill" data-val="120">2 hours</button>
+                <button class="pill" data-val="240">4 hours</button>
+                <button class="pill" data-val="custom">Custom</button>
             </div>
-            <button class="primary action-btn" id="btnNext2">Next</button>
-            <button class="text-btn" id="btnSkip2">Skip for now</button>
-        </div>
-        
-        <div id="step3" class="step hidden">
-            <h2>Step 2: Idle Threshold</h2>
-            <p>When should a tab be considered forgotten?</p>
-            <div class="field" style="display: flex; gap: var(--spacing-2); justify-content: center; align-items: center;">
-                <input type="number" id="wizardHours" value="0" min="0" max="99" style="width: 80px; text-align: center;">
-                <span>Hrs</span>
-                <input type="number" id="wizardMinutes" value="30" min="0" max="59" style="width: 80px; text-align: center;">
+            
+            <div id="customInputWrapper" class="hidden">
+                <input type="number" id="customHours" value="1" min="0" max="99" style="width: 80px; text-align: center;"> 
+                <span>Hours</span>
+                <input type="number" id="customMinutes" value="0" min="0" max="59" style="width: 80px; text-align: center;"> 
                 <span>Mins</span>
             </div>
-            <button class="primary action-btn" id="btnNext3">Next</button>
+
+            <div class="actions">
+                <button class="secondary action-btn" id="btnBack2">&larr; Back</button>
+                <button class="primary action-btn" id="btnNext2">Next &rarr;</button>
+            </div>
         </div>
-        
-        <div id="step4" class="step hidden">
-            <h2>All Set.</h2>
-            <p>Your browser manages itself now. Open less. Miss nothing.</p>
-            <button class="primary action-btn" id="btnFinish">Finish Setup</button>
+
+        <!-- Step 3: Optional AI -->
+        <div id="step3" class="step">
+            <h2>Want smarter categorization?</h2>
+            <p class="subtitle">Paste your Google Gemini API key to enable AI-powered tab classification. You can skip this and add it later in Settings.</p>
+            
+            <div class="field">
+                <input type="password" id="wizardApiKey" placeholder="AIzaSy...">
+                <button class="text-btn" id="btnToggleVisibility" style="margin-top: 8px; font-size: 13px;">Show Key</button>
+            </div>
+
+            <div class="actions">
+                <button class="secondary action-btn" id="btnSkip3">Skip for now</button>
+                <button class="primary action-btn" id="btnFinish">Save & Finish</button>
+            </div>
         </div>
-    </main>
+    </div>
+    
     <script type="module" src="onboarding.js"></script>
 </body>
 </html>
