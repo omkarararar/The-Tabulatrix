@@ -21,8 +21,11 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('btnSkip2').addEventListener('click', () => showStep(3));
 
     document.getElementById('btnNext3').addEventListener('click', async () => {
-        const threshold = document.getElementById('wizardThreshold').value;
-        await Storage.set('idleThreshold', parseInt(threshold, 10));
+        const hrs = parseInt(document.getElementById('wizardHours').value, 10) || 0;
+        const mins = parseInt(document.getElementById('wizardMinutes').value, 10) || 0;
+        const threshold = (hrs * 60) + mins;
+        
+        await Storage.set('idleThreshold', threshold);
         showStep(4);
     });
 

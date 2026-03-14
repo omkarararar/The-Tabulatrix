@@ -18,9 +18,14 @@
             <section class="card">
                 <h2>General Rules</h2>
                 <div class="field">
-                    <label for="idleThreshold">Idle Threshold (Minutes)</label>
-                    <input type="number" id="idleThreshold" value="30">
-                    <small>Tabs inactive for this long will trigger the pre-close flow.</small>
+                    <label>Idle Threshold</label>
+                    <div style="display: flex; gap: var(--spacing-2); align-items: center;">
+                        <input type="number" id="idleHours" value="0" min="0" max="99" style="width: 80px;">
+                        <span>Hours</span>
+                        <input type="number" id="idleMinutes" value="30" min="0" max="59" style="width: 80px;">
+                        <span>Minutes</span>
+                    </div>
+                    <small>Tabs inactive for this long will trigger the pre-close flow. You'll see a countdown.</small>
                 </div>
             </section>
             

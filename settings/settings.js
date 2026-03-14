@@ -6,7 +6,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     const useAi = await Storage.get('enableAi', false);
     const geminiKey = await Storage.get('geminiKey', '');
     
-    document.getElementById('idleThreshold').value = threshold;
+    document.getElementById('idleHours').value = Math.floor(threshold / 60);
+    document.getElementById('idleMinutes').value = threshold % 60;
+    
     document.getElementById('enableAi').checked = useAi;
     document.getElementById('geminiKey').value = geminiKey;
     
@@ -22,7 +24,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Save Settings
     document.getElementById('btnSave').addEventListener('click', async () => {
-        const newThreshold = parseInt(document.getElementById('idleThreshold').value, 10);
+        const hrs = parseInt(document.getElementById('idleHours').value, 10) || 0;
+        const mins = parseInt(document.getElementById('idleMinutes').value, 10) || 0;
+        const newThreshold = (hrs * 60) + mins;
+        
         const newUseAi = document.getElementById('enableAi').checked;
         const newKey = document.getElementById('geminiKey').value;
         

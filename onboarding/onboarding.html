@@ -29,14 +29,11 @@
         <div id="step3" class="step hidden">
             <h2>Step 2: Idle Threshold</h2>
             <p>When should a tab be considered forgotten?</p>
-            <div class="field">
-                <select id="wizardThreshold">
-                    <option value="15">15 Minutes</option>
-                    <option value="30" selected>30 Minutes (Recommended)</option>
-                    <option value="60">1 Hour</option>
-                    <option value="120">2 Hours</option>
-                    <option value="1440">1 Day</option>
-                </select>
+            <div class="field" style="display: flex; gap: var(--spacing-2); justify-content: center; align-items: center;">
+                <input type="number" id="wizardHours" value="0" min="0" max="99" style="width: 80px; text-align: center;">
+                <span>Hrs</span>
+                <input type="number" id="wizardMinutes" value="30" min="0" max="59" style="width: 80px; text-align: center;">
+                <span>Mins</span>
             </div>
             <button class="primary action-btn" id="btnNext3">Next</button>
         </div>
