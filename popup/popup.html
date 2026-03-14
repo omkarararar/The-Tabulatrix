@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabulatrix</title>
+    <!-- Core UI & Globals -->
+    <link rel="stylesheet" href="../assets/lib/oat.min.css">
+    <link rel="stylesheet" href="../globals.css">
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <main>
+        <header>
+            <h1>Tabulatrix</h1>
+            <p>12 Tabs Open</p>
+            <button id="settingsBtn" class="icon-button">
+                <img src="../assets/icons/settings.svg" alt="Settings">
+            </button>
+        </header>
+        
+        <section id="forgottenTabs" class="highlight-section hidden">
+            <h2>You forgot about these</h2>
+            <ul id="forgottenList"></ul>
+        </section>
+
+        <section id="categories">
+            <h2>Categories</h2>
+            <div id="categoryCards"></div>
+        </section>
+
+        <footer>
+            <button class="primary" id="runCleanupBtn">Run Cleanup</button>
+        </footer>
+    </main>
+
+    <script type="module" src="popup.js"></script>
+</body>
+</html>

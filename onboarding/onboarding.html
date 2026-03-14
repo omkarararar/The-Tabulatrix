@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Tabulatrix</title>
+    <link rel="stylesheet" href="../assets/lib/oat.min.css">
+    <link rel="stylesheet" href="../globals.css">
+    <link rel="stylesheet" href="onboarding.css">
+</head>
+<body>
+    <main class="wizard-container">
+        <div id="step1" class="step active">
+            <h1>Welcome to Tabulatrix</h1>
+            <p>Your intelligent browser manager. Let's get set up in under 2 minutes.</p>
+            <button class="primary action-btn" id="btnNext1">Get Started</button>
+        </div>
+        
+        <div id="step2" class="step hidden">
+            <h2>Step 1: AI Brains (Optional)</h2>
+            <p>Tabulatrix can use Google Gemini to perfectly categorize every tab and summarize content before it closes.</p>
+            <div class="field">
+                <input type="password" id="wizardGeminiKey" placeholder="Enter Gemini API Key (Optional)">
+            </div>
+            <button class="primary action-btn" id="btnNext2">Next</button>
+            <button class="text-btn" id="btnSkip2">Skip for now</button>
+        </div>
+        
+        <div id="step3" class="step hidden">
+            <h2>Step 2: Idle Threshold</h2>
+            <p>When should a tab be considered forgotten?</p>
+            <div class="field">
+                <select id="wizardThreshold">
+                    <option value="15">15 Minutes</option>
+                    <option value="30" selected>30 Minutes (Recommended)</option>
+                    <option value="60">1 Hour</option>
+                    <option value="120">2 Hours</option>
+                    <option value="1440">1 Day</option>
+                </select>
+            </div>
+            <button class="primary action-btn" id="btnNext3">Next</button>
+        </div>
+        
+        <div id="step4" class="step hidden">
+            <h2>All Set.</h2>
+            <p>Your browser manages itself now. Open less. Miss nothing.</p>
+            <button class="primary action-btn" id="btnFinish">Finish Setup</button>
+        </div>
+    </main>
+    <script type="module" src="onboarding.js"></script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+/* popup.css */
+body {
+    width: 360px;
+    height: 500px;
+    margin: 0;
+    padding: var(--spacing-4);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    overflow-y: auto;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-4);
+}
+
+h1 {
+    font-size: var(--font-lg);
+    font-weight: bold;
+    margin: 0;
+}
+
+.highlight-section {
+    background-color: var(--color-primary-light);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-3);
+    margin-bottom: var(--spacing-4);
+}
+
+.highlight-section h2 {
+    font-size: var(--font-sm);
+    color: var(--color-primary-dark);
+    margin-top: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+#categoryCards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-2);
+}
+
+footer {
+    margin-top: var(--spacing-4);
+    display: flex;
+    justify-content: stretch;
+}
+
+button.primary {
+    width: 100%;
+}
