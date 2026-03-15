@@ -34,17 +34,25 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
                 tabsData[tab.id].notified = true;
                 await Storage.set('tabActivity', tabsData);
 
-                console.log(`TabTracker: Tab ${tab.id} idle. Injecting toast...`);
+                console.log(`TabTracker: Tab ${tab.id} idle. Injecting toast into active tab...`);
                 
                 try {
-                    // Injecting standalone Shadow DOM toast directly into the idle tab
+                    const [activeTab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
+                    if (!activeTab || !activeTab.id || activeTab.url.startsWith('chrome://') || activeTab.url.startsWith('chrome-extension://')) {
+                        console.log(`TabTracker: cannot inject into active tab for idle tab ${tab.id}`);
+                        tabsData[tab.id].notified = false;
+                        await Storage.set('tabActivity', tabsData);
+                        continue;
+                    }
+
+                    // Injecting standalone Shadow DOM toast directly into the active tab
                     await chrome.scripting.executeScript({
-                        target: { tabId: tab.id },
+                        target: { tabId: activeTab.id },
                         func: injectToast,
                         args: [tab.id, tab.title || 'Unknown Tab', 'Uncategorized'] // Using 'Uncategorized' for MVP until AI is ready
                     });
                 } catch (err) {
-                    console.error(`TabTracker: Failed to inject script into ${tab.id}`, chrome.runtime.lastError, err);
+                    console.error(`TabTracker: Failed to inject script into active tab for ${tab.id}`, chrome.runtime.lastError, err);
                     tabsData[tab.id].notified = false; // Reset if injection failed
                     await Storage.set('tabActivity', tabsData);
                 }
@@ -53,16 +61,22 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
     }
 });
 
-// The fully self-contained script to be injected into the idle page
+// The fully self-contained script to be injected into the active page
 function injectToast(tabId, tabTitle, category) {
-    // Prevent double-injection
-    if (document.getElementById('tabulatrix-toast-root')) return;
+    // Prevent double-injection for the same idle tab
+    const toastId = 'tabulatrix-toast-' + tabId;
+    if (document.getElementById(toastId)) return;
 
     // Create host for Shadow DOM
     const host = document.createElement('div');
-    host.id = 'tabulatrix-toast-root';
+    host.id = toastId;
     host.style.position = 'fixed';
-    host.style.bottom = '20px';
+    
+    // Calculate bottom offset to stack toasts
+    const existingToasts = document.querySelectorAll('[id^="tabulatrix-toast-"]');
+    const offset = 20 + (existingToasts.length * 170); // 170px per toast approx
+    
+    host.style.bottom = offset + 'px';
     host.style.right = '20px';
     host.style.zIndex = '2147483647'; // Max z-index
     document.body.appendChild(host);
@@ -187,13 +201,12 @@ function injectToast(tabId, tabTitle, category) {
     wrapper.innerHTML = `
         <div class="header">
             <span class="badge">${category}</span>
-            <span class="countdown" id="t-countdown">60s</span>
+            <span class="countdown" id="t-countdown">30s</span>
         </div>
         <h3 class="title">${safeTitle}</h3>
         <p class="desc">This tab has been idle. Closing soon to save memory.</p>
         <div class="actions">
-            <button id="btnKeep">Keep Open</button>
-            <button id="btnSnooze">Snooze 2h</button>
+            <button id="btnSnooze">Snooze</button>
             <button id="btnClose" class="primary">Close Tab</button>
         </div>
     `;
@@ -205,7 +218,7 @@ function injectToast(tabId, tabTitle, category) {
     setTimeout(() => wrapper.classList.add('visible'), 50);
 
     // Logic
-    let timeLeft = 60;
+    let timeLeft = 30;
     const countdownEl = shadow.getElementById('t-countdown');
     
     const sendMsg = (action) => {
@@ -221,11 +234,6 @@ function injectToast(tabId, tabTitle, category) {
             sendMsg('closeTab');
         }
     }, 1000);
-
-    shadow.getElementById('btnKeep').addEventListener('click', () => {
-        clearInterval(timer);
-        sendMsg('keepTab');
-    });
 
     shadow.getElementById('btnSnooze').addEventListener('click', () => {
         clearInterval(timer);
